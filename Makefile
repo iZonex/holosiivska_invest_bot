@@ -3,9 +3,11 @@ VENV := venv
 PYTHON := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 DOCKER_IMAGE := telegram-bot-image
+SERVICE_NAME := telegram-bot
+SERVICE_SCRIPT := setup_telegram_bot_service.sh
 
 # Targets
-.PHONY: all install venv run test clean docker-build docker-run
+.PHONY: all install venv run test clean docker-build docker-run setup-service
 
 # Default target: Set up the virtual environment and install dependencies
 all: install
@@ -41,3 +43,12 @@ docker-build:
 # Run the Docker container
 docker-run:
 	docker run -d --name telegram-bot-container $(DOCKER_IMAGE)
+
+# Setup the bot as a systemd service
+setup-service:
+	@if [ -z "$(TELEGRAM_TOKEN)" ]; then \
+		echo "Error: TELEGRAM_TOKEN is not set. Please provide it as an argument:"; \
+		echo "make setup-service TELEGRAM_TOKEN=your_telegram_token"; \
+		exit 1; \
+	fi
+	./$(SERVICE_SCRIPT) $(TELEGRAM_TOKEN)

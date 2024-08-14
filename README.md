@@ -67,6 +67,14 @@ make docker-build
 make docker-run
 ```
 
+### 7. Install bot to Systemd
+
+Run the Script with the TELEGRAM_TOKEN as an Argument:
+
+```bash
+make setup-service TELEGRAM_TOKEN=your_telegram_token
+```
+
 ## Project Structure
 
 - `lambda_function.py`: The entry point of the bot when running on AWS Lambda.
@@ -76,6 +84,7 @@ make docker-run
 - `.dockerignore`: Specifies files and directories that should be ignored by Docker.
 - `Makefile`: Automates setup, testing, and Docker tasks.
 - `test_bot.py`: Contains unit tests for the bot.
+- `setup_telegram_bot_service.sh`: Setup telegram bot as service
 
 ## License
 
